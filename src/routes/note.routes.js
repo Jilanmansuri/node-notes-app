@@ -1,5 +1,5 @@
 const express = require("express");
-const { createNote, createBulkNotes, getAllNotes } = require("../controllers/note.controller");
+const { createNote, createBulkNotes, getAllNotes, getNoteById } = require("../controllers/note.controller");
 
 const NoteRouter = express.Router();
 
@@ -11,5 +11,8 @@ NoteRouter.post("/bulk", createBulkNotes);
 
 // 3. GET /api/notes - Get all notes
 NoteRouter.get("/", getAllNotes);
+
+// 4. GET /api/notes/:id - Get a single note by ID
+NoteRouter.get("/:id", getNoteById);
 
 module.exports = NoteRouter;
