@@ -1,5 +1,5 @@
 const express = require("express");
-const { createNote, createBulkNotes, getAllNotes, getNoteById, replaceNote } = require("../controllers/note.controller");
+const { createNote, createBulkNotes, getAllNotes, getNoteById, replaceNote, updateNote } = require("../controllers/note.controller");
 
 const NoteRouter = express.Router();
 
@@ -17,5 +17,8 @@ NoteRouter.get("/:id", getNoteById);
 
 // 5. PUT /api/notes/:id - Replace a note completely
 NoteRouter.put("/:id", replaceNote);
+
+// 6. PATCH /api/notes/:id - Update specific fields only
+NoteRouter.patch("/:id", updateNote);
 
 module.exports = NoteRouter;
