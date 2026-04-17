@@ -1,19 +1,15 @@
 const mongoose = require("mongoose");
-
-
+require("dotenv").config();
 
 // MongoDB Connection
-async function ConnectDB(){
-
-    mongoose.connect("mongodb://127.0.0.1:27017/backendClassDB")
-    .then(() => {
-        console.log("MongoDB Connected Successfully");
-    })
-    .catch((err) => {
-        console.log("Database connection error", err);
-    });
-    
+async function connectDB() {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI);
+    console.log(`MongoDB Connected Successfully: ${conn.connection.host}`);
+  } catch (err) {
+    console.error("Database connection error:", err.message);
+    process.exit(1);
+  }
 }
 
-module.exports = ConnectDB;
-
+module.exports = connectDB;
