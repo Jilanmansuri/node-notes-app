@@ -6,7 +6,6 @@ const createNote = async (req, res) => {
   const { title, content } = req.body;
 
   try {
-    // validation
     if (!title || !content) {
       return res.status(400).json({
         success: false,
@@ -15,19 +14,14 @@ const createNote = async (req, res) => {
       });
     }
 
-    // create note
     const newNote = new Note(req.body);
-
-    // save to DB
     const savedNote = await newNote.save();
 
-    // success response
     res.status(201).json({
       success: true,
       message: "Note created successfully",
       data: savedNote,
     });
-
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -37,4 +31,32 @@ const createNote = async (req, res) => {
   }
 };
 
-module.exports = { createNote };
+const createBulkNotes = async (req, res) => {
+  const { notes } = req.body;
+
+  try {
+    if (!notes || !Array.isArray(notes) || notes.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Notes array is required and cannot be empty",
+        data: null,
+      });
+    }
+
+    const savedNotes = await Note.insertMany(notes);
+
+    res.status(201).json({
+      success: true,
+      message: `${savedNotes.length} notes created successfully`,
+      data: savedNotes,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = { createNote, createBulkNotes };
