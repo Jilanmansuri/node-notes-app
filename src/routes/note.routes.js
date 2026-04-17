@@ -1,5 +1,14 @@
 const express = require("express");
-const { createNote, createBulkNotes, getAllNotes, getNoteById, replaceNote, updateNote, deleteNote } = require("../controllers/note.controller");
+const {
+  createNote,
+  createBulkNotes,
+  getAllNotes,
+  getNoteById,
+  replaceNote,
+  updateNote,
+  deleteNote,
+  deleteBulkNotes,
+} = require("../controllers/note.controller");
 
 const NoteRouter = express.Router();
 
@@ -20,6 +29,9 @@ NoteRouter.put("/:id", replaceNote);
 
 // 6. PATCH /api/notes/:id - Update specific fields only
 NoteRouter.patch("/:id", updateNote);
+
+// 8. DELETE /api/notes/bulk - Delete multiple notes
+NoteRouter.delete("/bulk", deleteBulkNotes);
 
 // 7. DELETE /api/notes/:id - Delete a single note
 NoteRouter.delete("/:id", deleteNote);
